@@ -2,9 +2,12 @@ class UsersController < ApplicationController
 
 
   def create
-    user = User.find(params[:email]) || User.create(user_params)
+    user = User.new(user_params)
 
     if user.valid?
+      user = User.create(user_params)
+      
+
       token = encode_token(user.id)
 
       render json: {user: UserSerializer.new(user), token: token}
@@ -28,7 +31,7 @@ class UsersController < ApplicationController
 private
 
   def user_params
-    params.require(:user).permit(:guest, :full_name, :email, :password, :mobile, :address)
+    params.require(:user).permit(:guest, :first_name, :last_name, :feedback, :email, :password, :mobile, :address)
   end
 
 end
