@@ -10,6 +10,27 @@ class SoapsController < ApplicationController
     render json: @soap
   end
 
+  def update
+
+    @soap = Soap.find(params[:id])
+    # byebug
+    @soap.update(quantity: params[:quantity], price: params[:price])
+    soaps = @soap.cart.soaps
+    # new_array = @soap.cart.soaps.insert(soap_idx, @soap)
+    # new_array.pop()
+    # @soap.cart.soaps = new_array
+# byebug
+    render json: soaps
+  end
+
+  def destroy
+    @soap = Soap.find(params[:id])
+    soaps_cart = @soap.cart
+    @soap.destroy
+
+    render json: soaps_cart.soaps
+  end
+
 private
 
   def soap_params

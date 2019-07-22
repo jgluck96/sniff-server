@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 resources :users
 resources :soaps
 resources :carts
+resources :charges
 post '/login', to: 'auth#create'
 get '/auto_login', to: 'auth#auto_login'
 end
