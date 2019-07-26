@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    render json: @users, include: ['cart.soaps']
+    render json: @users, include: ['cart.soaps', 'orders']
   end
 
   def create

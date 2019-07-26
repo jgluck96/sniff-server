@@ -4,6 +4,7 @@ resources :users
 resources :soaps
 resources :carts
 resources :charges
+resources :orders
 post '/login', to: 'auth#create'
 get '/auto_login', to: 'auth#auto_login'
 end
