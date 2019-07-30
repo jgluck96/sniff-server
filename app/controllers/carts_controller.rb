@@ -8,7 +8,7 @@ class CartsController < ApplicationController
   def create(user_id)
 
     @cart = Cart.create({user_id: user_id})
-    byebug
+    
     render json: @cart
   end
 
