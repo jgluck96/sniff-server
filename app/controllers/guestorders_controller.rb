@@ -8,7 +8,7 @@ class GuestordersController < ApplicationController
   def create
 # byebug
     @guestorder = Guestorder.create(guestorder_params)
-
+    UserMailer.order_confirmation(@guestorder).deliver_later
     render json: @guestorder
   end
 

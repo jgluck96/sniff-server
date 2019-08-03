@@ -21,17 +21,19 @@ class ChargesController < ApplicationController
       })
       if params[:charge][:userId]
 
-        @order = Order.create(confirmation: params[:charge][:confirmation], user_id: params[:charge][:userId], soaps: params[:charge][:soaps], total: params[:charge][:amount])
+        @order = Order.create(confirmation: params[:charge][:confirmation], user_id: params[:charge][:userId], soaps: params[:charge][:soaps], total: (params[:charge][:amount]).to_f/100)
         user = User.find(params[:charge][:userId])
         user.cart.soaps = []
+        # byebug
+        UserMailer.order_confirmation(@order).deliver_later
         render json: @order
-      # else
-      #   @guestorder = Guestorder.create(guestorder_params)
-      #
-      #   render json: @guestorder
+      else
+        # @guestorder = Guestorder.create(guestorder_params)
+
+        render json: charge
       end
 
-      render json: charge
+      # render json: charge
 
 
     rescue Stripe::CardError => e

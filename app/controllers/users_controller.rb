@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
 
     if params[:guest] === true
+
       user = User.new(guest: params[:guest], first_name: params[:first_name], last_name: params[:last_name], feedback: params[:feedback], email: params[:email], mobile: params[:phone])
       user.save(validate: false)
       Cart.create({user_id: user.id})
@@ -18,7 +19,11 @@ class UsersController < ApplicationController
       if user.valid?
         user = User.create(user_params)
         Cart.create({user_id: user.id})
-
+        # send signup conf email
+        UserMailer.signup_confirmation(user).deliver_later
+        if params[:emailSignup]
+          Newsletter.create(email: user.email)
+        end
 
         token = encode_token(user.id)
 
@@ -28,7 +33,7 @@ class UsersController < ApplicationController
         # if(user.errors[:email]) {
         #   render
         # }
-        render json: {errors: user.errors.full_messages}
+        render json: {errors: 'Email already exists, please log in.'}
       end
     end
 

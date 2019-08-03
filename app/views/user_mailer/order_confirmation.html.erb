@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv='Content-Type'>
+    <style>
+
+      img {
+        height: 50px;
+        width: 65px
+      }
+    </style>
+  </head>
+  <body>
+    <a class='logo' href='http://localhost:3001'><%= image_tag(attachments['snifflogo1.png'].url) %></a>
+    <h1>Thank you for your order!</h1>
+    <p>
+      Your confirmation number is #<%= @order.confirmation %>
+    </p>
+    <h3>Order Summary</h3>
+    <p>Total: $<%= @total %></p>
+    <p>
+      Start customizing your soap today at: <%= @url %>
+    </p><br><br>
+    <p>Stay clean,
+
+    </p>
+    <p>The sniff. team</p>
+  </body>
+</html>
