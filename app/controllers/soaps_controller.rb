@@ -11,6 +11,12 @@ class SoapsController < ApplicationController
     render json: @soap
   end
 
+  def show
+    # byebug
+    @soap = Soap.find(params[:id])
+    render json: @soap
+  end
+
   def update
 
     @soap = Soap.find(params[:id])

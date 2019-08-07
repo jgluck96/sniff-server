@@ -5,6 +5,24 @@ default from: 'sniffskincare@gmail.com'
   #
   #   en.user_mailer.signup_confirmation.subject
   #
+  def feedback(email, message)
+    @email = email
+    @message = message
+    mail(to: 'sniffskincare@gmail.com', subject: 'FEEDBACK')
+  end
+
+  def contact(email, message)
+    @email = email
+    @message = message
+    mail(to: 'sniffskincare@gmail.com', subject: 'CONTACT')
+  end
+
+  def newsletter(email)
+    # @url = 'http://localhost:3001/customize'
+    attachments.inline["snifflogo1.png"] = File.read("#{Rails.root}/app/assets/images/snifflogo1.png")
+    mail(to: email, subject: 'sniff. Newsletter!')
+  end
+
   def signup_confirmation(user)
     @user = user
     @url = 'http://localhost:3001/customize'

@@ -11,6 +11,7 @@ class NewslettersController < ApplicationController
       render json: {message: 'You are already enrolled.'}
     else
       newsletter = Newsletter.create(email: params[:email])
+      UserMailer.newsletter(newsletter[:email]).deliver_later
       render json: newsletter
     end
   end
