@@ -13,6 +13,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:confirmation, :user_id, :soaps, :total)
+    params.require(:order).permit(:confirmation, :address, :user_id, :soaps, :total)
   end
 end

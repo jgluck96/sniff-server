@@ -1,6 +1,7 @@
 require 'stripe'
 class ChargesController < ApplicationController
 
+
   def create
 
     Stripe.api_key = ENV['STRIPE']
@@ -16,12 +17,13 @@ class ChargesController < ApplicationController
       charge = Stripe::Charge.create({
         :customer => customer.id,
         :amount => params[:charge][:amount],
+
         :description => params[:charge][:description],
         :currency => params[:charge][:currency],
       })
       if params[:charge][:userId]
 
-        @order = Order.create(confirmation: params[:charge][:confirmation], user_id: params[:charge][:userId], soaps: params[:charge][:soaps], total: (params[:charge][:amount]).to_f/100)
+        @order = Order.create(confirmation: params[:charge][:confirmation], user_id: params[:charge][:userId], soaps: params[:charge][:soaps], address: params[:charge][:address], total: (params[:charge][:amount]).to_f/100)
         user = User.find(params[:charge][:userId])
         user.cart.soaps = []
         # byebug

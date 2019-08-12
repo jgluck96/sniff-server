@@ -42,7 +42,7 @@ class SoapsController < ApplicationController
 private
 
   def soap_params
-    params.require(:soap).permit(:base, :quantity, :fragrance1, :fragrance2, :fragrance3, :addon, :price, :cart_id)
+    params.require(:soap).permit(:base, :quantity, :image, :fragrance1, :fragrance2, :fragrance3, :addon, :price, :cart_id)
   end
 
 end
