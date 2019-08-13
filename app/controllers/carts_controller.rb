@@ -1,14 +1,14 @@
 class CartsController < ApplicationController
 
   def index
-    @cart = Cart.all
-    render json: @cart
+    @carts = Cart.all
+    render json: @carts
   end
 
   def create(user_id)
 
     @cart = Cart.create({user_id: user_id})
-    
+
     render json: @cart
   end
 

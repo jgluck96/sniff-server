@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::API
 
   def encode_token(user_id)
-    puts ENV['TRY_ME']
     JWT.encode({user_id: user_id}, ENV['TRY_ME'])
   end
 
@@ -18,7 +17,7 @@ class ApplicationController < ActionController::API
   end
 
   def curr_user
-    
+
     begin
       user_id = decoded_token[0]['user_id']
 

@@ -11,6 +11,12 @@ default from: 'sniffskincare@gmail.com'
     mail(to: 'sniffskincare@gmail.com', subject: 'FEEDBACK')
   end
 
+  def verification(user, temp_pass)
+    @user = user
+    @temp = temp_pass
+    mail(to: @user.email, subject: 'Account Verification')
+  end
+
   def contact(email, message)
     @email = email
     @message = message

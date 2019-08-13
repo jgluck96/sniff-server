@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv='Content-Type'>
+    <style>
+      .btn {
+        padding: 18px;
+        text-decoration: none;
+        background: cornflowerblue;
+        width: 100px;
+        height: 80px;
+        border-radius: 5px;
+      }
+
+      a {
+        text-decoration: none;
+        color: white;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to sniff.</h1>
+    <p>
+      Please verify your account below to get started!
+    </p><br>
+    <p>
+      Email: <%= @user.email %><br>
+      Temporary Password: <%= @temp %>
+    </p><br>
+    <button class='btn'><a href='https://localhost:3001/verify'>Verify</a></button><br><br>
+    <p>Stay clean,
+
+    </p>
+    <p>The sniff. team</p>
+  </body>
+</html>

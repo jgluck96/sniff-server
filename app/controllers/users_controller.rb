@@ -16,12 +16,13 @@ class UsersController < ApplicationController
       render json: user
     else
       user = User.new(user_params)
+
       if user.valid?
         user = User.create(user_params)
         Cart.create({user_id: user.id})
         # send signup conf email
         UserMailer.signup_confirmation(user).deliver_later
-        if params[:emailSignup]
+        if params[:emailSignup] == true
           Newsletter.create(email: user.email)
         end
 
@@ -30,10 +31,26 @@ class UsersController < ApplicationController
         render json: {user: UserSerializer.new(user), token: token}
       else
         # byebug
-        # if(user.errors[:email]) {
-        #   render
-        # }
+        user_guest = User.find_by(email: params[:user][:email], guest: true)
+        user_noguest = User.find_by(email: params[:user][:email], guest: false)
+        byebug
+        if user_guest && !user_noguest
+          user = User.new(user_params)
+          user.save(validate: false)
+          # user.update_attribute(:password, params[:user][:password])
+          Cart.create({user_id: user.id})
+          # send signup conf email
+          UserMailer.signup_confirmation(user).deliver_later
+          if params[:emailSignup] == true
+            Newsletter.create(email: user.email)
+          end
+
+          token = encode_token(user.id)
+
+          render json: {user: UserSerializer.new(user), token: token}
+        else
         render json: {errors: 'Email already exists, please log in.'}
+        end
       end
     end
 
@@ -46,15 +63,27 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
-    @user.update(user_params)
-    render json: @user
+    user = User.find_by(id: params[:id], guest: false)
+    if params[:verified]
+      if user.authenticate(params[:temp]) && user[:email] == params[:email] && user[:verified] == false
+        authenticated = user.authenticate(params[:temp])
+        authenticated.update_attribute(:password, params[:password])
+        authenticated.update_attribute(:verified, params[:verified])
+        render json: user
+      else
+        render json: {error: 'Enter the correct email and temporary password that was provided.'}
+      end
+    else
+      user.update(user_params)
+      render json: user
+    end
+
   end
 
 private
 
   def user_params
-    params.require(:user).permit(:guest, :first_name, :last_name, :feedback, :email, :password, :mobile, :address)
+    params.require(:user).permit(:guest, :first_name, :verified, :last_name, :feedback, :email, :password, :mobile, :address)
   end
 
 end
