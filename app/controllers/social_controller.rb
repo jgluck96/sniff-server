@@ -5,13 +5,13 @@ class SocialController < ApplicationController
     user_guest = User.find_by(email: params[:user][:email], guest: true)
 
     if user
-      byebug
+      # byebug
       render json: {user: UserSerializer.new(user), token:encode_token(user.id)}
     else
       # when you create social signup, send email verification to their email
       # they click on it and it brings them to /verify
       # they change their password from there with a patch
-      byebug
+      # byebug
       if user_guest
         user = User.new(first_name: params[:user][:first_name], last_name: params[:user][:last_name], email: params[:user][:email], password: params[:user][:password], verified: false, guest: false)
         user.save(validate: false)

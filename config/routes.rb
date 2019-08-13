@@ -12,5 +12,5 @@ resources :orders
 post '/oauth', to: 'social#create'
 post '/login', to: 'auth#create'
 get '/auto_login', to: 'auth#auto_login'
-resources :password_resets
+post '/verify', to: 'password_resets#verify'
 end

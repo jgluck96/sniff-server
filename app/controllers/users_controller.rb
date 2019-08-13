@@ -33,7 +33,7 @@ class UsersController < ApplicationController
         # byebug
         user_guest = User.find_by(email: params[:user][:email], guest: true)
         user_noguest = User.find_by(email: params[:user][:email], guest: false)
-        byebug
+        # byebug
         if user_guest && !user_noguest
           user = User.new(user_params)
           user.save(validate: false)

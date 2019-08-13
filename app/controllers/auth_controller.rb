@@ -2,7 +2,7 @@ class AuthController < ApplicationController
 
   def create
     user = User.find_by(email: params[:user][:email], guest: false)
-byebug
+# byebug
     if user && user.authenticate(params[:user][:password])
       render json: {user: UserSerializer.new(user), token:encode_token(user.id)}
     else
