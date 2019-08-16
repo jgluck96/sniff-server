@@ -28,7 +28,7 @@ class ChargesController < ApplicationController
         user.cart.soaps = []
         # byebug
         UserMailer.order_confirmation(@order).deliver_later
-        render json: @order
+        render json: {order: @order, user: UserSerializer.new(user)}
       else
         # @guestorder = Guestorder.create(guestorder_params)
 

@@ -64,19 +64,22 @@ class UsersController < ApplicationController
 
   def update
     user = User.find_by(id: params[:id], guest: false)
-    if params[:verified]
-      if user.authenticate(params[:temp]) && user[:email] == params[:email] && user[:verified] == false
-        authenticated = user.authenticate(params[:temp])
-        authenticated.update_attribute(:password, params[:password])
-        authenticated.update_attribute(:verified, params[:verified])
-        render json: user
-      else
-        render json: {error: 'Enter the correct email and temporary password that was provided.'}
-      end
-    else
-      user.update(user_params)
+    # if params[:verified]
+    #   if user.authenticate(params[:temp]) && user[:email] == params[:email] && user[:verified] == false
+    #     authenticated = user.authenticate(params[:temp])
+    #     authenticated.update_attribute(:password, params[:password])
+    #     authenticated.update_attribute(:verified, params[:verified])
+    #     render json: user
+    #   else
+    #     render json: {error: 'Enter the correct email and temporary password that was provided.'}
+    #   end
+    # else
+    # byebug
+    user[params.keys.first] = params[params.keys.first]
+    user.save(:validate => false)
+      # user.update_attribute((params.keys.first.to_sym), user_params)
       render json: user
-    end
+    # end
 
   end
 
